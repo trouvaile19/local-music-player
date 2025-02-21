@@ -46,7 +46,6 @@
         </div>
 
         <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
-
         <audio id="audio" src=""></audio>
     </div>
 
@@ -221,12 +220,14 @@
                 player.classList.add('playing')
                 cdThumbAnimate.play()
                 app.isPlaying = true
+                progress.value = 0;
             }
             // the progress song has changed
             audio.ontimeupdate = function(){
                 const timePercent = Math.floor((audio.currentTime/audio.duration)*100) 
                 progress.value = timePercent
             }
+            //set time audio when the progress change
             progress.onchange = function(e){
                 audio.play()
                 const progressPercent = e.target.value
