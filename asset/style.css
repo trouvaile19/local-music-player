@@ -118,6 +118,10 @@
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
   }
+  .progress:active,
+  .progress:focus {
+      background: var(--primary-color);
+  }
   
   .progress::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -127,7 +131,13 @@
     background-color: var(--primary-color);
     cursor: pointer;
   }
-  
+  .btn-repeat,
+  .btn-prev,
+  .btn-toggle-play,
+  .btn-next,
+  .btn-random :hover{
+    cursor: pointer;
+  }  
   /* PLAYLIST */
   .playlist {
     margin-top: 408px;
@@ -147,7 +157,6 @@
   .song.active {
     background-color: var(--primary-color);
   }
-  
   .song:active {
     opacity: 0.8;
   }
