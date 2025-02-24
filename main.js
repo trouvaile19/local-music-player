@@ -27,7 +27,14 @@
         const prevBtn = $('.btn-prev')
         const randomBtn = $('.btn-random')
         const repeatBtn = $('.btn-repeat')
-    
+        const volumeControl = $('.volume-control') 
+        const volumeProgress = $('.volume-progress')
+        
+        const loudVolIcon = $('.loud-vol');
+        const lowVolIcon = $('.low-vol');
+        const muteVolIcon = $('.mute-vol');
+        
+
         const app = 
         {
             isPlaying: false,  
@@ -35,7 +42,6 @@
             isRepeat: false,
             config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY) ||'{}'),
 
-    
             currentIndex: 0,
             songs:
             [
@@ -101,7 +107,7 @@
                 }
             ],
             setConfig: function(key, value){
-                this.config['key'] = value;
+                this.config[key] = value;
                 localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
             },
             render: function(){
@@ -119,8 +125,7 @@
                     </div>`
                 )).join('')
                 
-                $('.playlist').innerHTML = html;
-    
+                $('.playlist').innerHTML = html;    
             },
             
              
@@ -217,6 +222,29 @@
                     app.setConfig('isRepeat', app.isRepeat);
                     repeatBtn.classList.toggle('active', app.isRepeat)
                 }
+                // handle volume
+                volumeControl.onclick = function(){
+                    if(volumeProgress.style.display ==='block'){
+                        volumeProgress.style.display = 'none'
+                    }else{
+                        volumeProgress.style.display = 'block'
+                    }
+                }
+                volumeProgress.oninput = function(e){
+                    const volume = e.target.value/100
+                    audio.volume = volume;
+                    lowVolIcon.style.display = 'none';
+                    muteVolIcon.style.display = 'none';
+                    loudVolIcon.style.display = 'none' 
+                    if (volume === 0){
+                        muteVolIcon.style.display = 'block'
+                    }     
+                    else if(volume <= 0.5 && volume != 0){
+                        lowVolIcon.style.display = 'block'
+                    }else{
+                        loudVolIcon.style.display = 'block'
+                    }              
+                }
                 // handle ended audio 
                 audio.onended = function(){
                     if(app.isRepeat){
@@ -263,10 +291,12 @@
                 cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
                 audio.src = this.currentSong.path
                 console.log(audio.src)
+                this.setConfig('currentIndex', this.currentIndex)
             },
             loadConfig: function(){
                 this.isRandom = this.config.isRandom
                 this.isRepeat = this.config.isRepeat
+                this.currentIndex = this.config.currentIndex
             },
             nextSong: function(){
                 this.currentIndex++;
@@ -303,8 +333,10 @@
                 app.scrollToActiveSong()
             },
             start: function(){
-                // assign config in app from reading localStorage
-                this.loadConfig()
+                // show the initial state of repeat, random btn and currentSong
+                randomBtn.classList.toggle('active', app.isRandom)
+                repeatBtn.classList.toggle('active', app.isRepeat)
+                this.currentIndex = this.config.currentIndex
                 // Define Object's properties
                 this.defineProperties()
                 // Render playlist
@@ -313,9 +345,8 @@
                 this.loadCurrentSong()
                 // Listen and handle events (Dom event)
                 this.handleEvent()
-                // show the initial state of repeat and random btn 
-                randomBtn.classList.toggle('active', app.isRandom)
-                repeatBtn.classList.toggle('active', app.isRepeat)
+                // assign config in app from reading localStorage
+                this.loadConfig()
             }
     
         }

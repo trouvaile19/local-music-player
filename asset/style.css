@@ -2,7 +2,7 @@
     --primary-color: #ec1f55;
     --text-color: #333;
   }
-  
+
   * {
     padding: 0;
     margin: 0;
@@ -44,6 +44,7 @@
     width: 100%;
     max-width: 480px;
     border-bottom: 1px solid #ebebeb;
+  
   }
   
   /* HEADER */
@@ -90,6 +91,7 @@
     color: #666;
     padding: 18px;
     font-size: 18px;
+    width: 10px;
   }
   
   .control .btn.active {
@@ -106,8 +108,26 @@
     align-items: center;
     justify-content: center;
     background-color: var(--primary-color);
+    margin-left: 10px;
   }
-  
+  .main-btn{
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+  }
+  .btn.btn-prev {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+  .btn-repeat{
+    flex: 0.6;
+  }
+  .vol-random-btn{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+  }
   .progress {
     width: 100%;
     -webkit-appearance: none;
@@ -135,9 +155,36 @@
   .btn-prev,
   .btn-toggle-play,
   .btn-next,
-  .btn-random :hover{
+  .btn-random,
+  .volume-control :hover{
     cursor: pointer;
-  }  
+  }
+  .volume-control {
+    width: 23px;
+    padding-bottom: 20px;
+  }
+  .volume-progress{
+    width: 70px;
+    transform: rotate(270deg);
+    position: absolute;
+    bottom: 115px;
+    right: 8px;
+    display: none;
+  }
+  .volume-icon{
+    margin-top: 90%;
+    width: 23px;
+  }
+  .low-vol{
+    width: 16px;
+  }
+  .mute-vol{
+    width: 20px;
+  }
+  .low-vol,
+  .mute-vol{
+    display: none;
+  }
   /* PLAYLIST */
   .playlist {
     margin-top: 408px;
