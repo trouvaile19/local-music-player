@@ -294,9 +294,9 @@
                 this.setConfig('currentIndex', this.currentIndex)
             },
             loadConfig: function(){
-                this.isRandom = this.config.isRandom
-                this.isRepeat = this.config.isRepeat
-                this.currentIndex = this.config.currentIndex
+                this.isRandom = this.config.isRandom || false
+                this.isRepeat = this.config.isRepeat || false
+                this.currentIndex = this.config.currentIndex !== undefined ? this.config.currentIndex : 0;
             },
             nextSong: function(){
                 this.currentIndex++;
@@ -333,10 +333,11 @@
                 app.scrollToActiveSong()
             },
             start: function(){
+                // assign config in app from reading localStorage
+                this.loadConfig()
                 // show the initial state of repeat, random btn and currentSong
                 randomBtn.classList.toggle('active', app.isRandom)
                 repeatBtn.classList.toggle('active', app.isRepeat)
-                this.currentIndex = this.config.currentIndex
                 // Define Object's properties
                 this.defineProperties()
                 // Render playlist
@@ -345,8 +346,7 @@
                 this.loadCurrentSong()
                 // Listen and handle events (Dom event)
                 this.handleEvent()
-                // assign config in app from reading localStorage
-                this.loadConfig()
+
             }
     
         }
