@@ -255,6 +255,9 @@
     gap: 55px;
     font-size: 25px;
   }
+  .icon-contact a{
+    text-decoration: none;
+  }
   .fa-brands{
     color: #333;
   }
